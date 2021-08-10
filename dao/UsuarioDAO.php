@@ -44,7 +44,7 @@ class UsuarioDAO implements IUsuarioDAO{
         return $array;
 
     }
-    
+
     public function findById($id){
         $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE id = :id");
         $sql->bindValue(':id', $id);
@@ -67,14 +67,24 @@ class UsuarioDAO implements IUsuarioDAO{
 
     
     public function update(Usuario $u){
+        $sql = $this->pdo->prepare("UPDATE usuarios SET nome = :nome, email = :email WHERE id = :id");
+        $sql->bindValue(':id', $u->getId());
+        $sql->bindValue(':nome', $u->getNome());
+        $sql->bindValue(':email', $u->getEmail());
+        $sql->execute();
+
+        return $u;
 
     }
+
     public function delete($id){
+        $sql = $this->pdo->prepare("DELETE FROM usuarios WHERE id = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
 
     }
 
     public function findByEmail($email){
-
         $sql = $this->pdo->prepare("SELECT * FROM usuarios WHERE email = :email");
         $sql->bindValue(':email', $email);
         $sql->execute();

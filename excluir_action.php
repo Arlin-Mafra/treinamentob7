@@ -1,14 +1,13 @@
 <?php
 require 'config.php';
+require 'dao/UsuarioDAO.php';
+
+$usuarioDAO = new UsuarioDAO($pdo);
 
 $id = filter_input(INPUT_GET, 'id');
 
-if ($id) {
-
-
-    $sql = $pdo->prepare("DELETE from usuarios WHERE id = :id");
-    $sql->bindValue(':id', $id);
-    $sql->execute();
+if($id){
+    $usuarioDAO->delete($id);
 }
-header("location: index.php");
+header("location:index.php");
 exit;
